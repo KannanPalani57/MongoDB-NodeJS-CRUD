@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+a{
+   text-decoration: none;
+   width: 70px;
+   height: 50px;
+   background: purple;
+   color: white;
+}
+button{
+   width: 70px;
+   height: 30px;
+   background: purple;
+   color: white;
+}
+input{
+  font-size: 1rem;
+  text-emphasis: wrap;  
+  padding: 0.4em 1em;
+}
+</style>
+<body>
+    <form id = "form" class = "addUser"  name = "form" class="field" onsubmit="return validateForm()">
+      <h3>Product Management</h3>
+        <div>
+        <label for = "productName">Product Name</label>
+            <input type = "text" id="product" name = "productName" placeholder = "Type Product Name" />
+              <small></small>  
+          </div>
+  
+            <div className="field">
+            <label for = "quantity">Quantity</label>
+            <input type = "text" name = "quantity" maxlength = "3" placeholder = "Type Quantity"  />
+            </div>
+  
+            <div className="field">
+            <label for = "price">Price</label>
+            <input type = "text" name = "price" maxlength = "3" placeholder = "Type Price" />
+            </div>
+            
+            <div className="field">           
+            <label for = "manufacturedAt">Manufacturing Location</label>
+            <input type = "manufacturedAt" name = "manufacturedAt" placeholder = "Type Manufacturing Location"/>
+            </div>
+            
+          
+            <button id = "submit-btn" formmethod = "post" formaction="/create-product" type="submit" >Submit</button>
+            <button type = "submit" id = "update-tag" formmethod = "post"  style = "display: none">Update</button>
+            <button id = "cancelBtn" style = "display: none">Cancel</button>
+        </form>
+
+
+         <table>
+          <tr>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Manufacturing Location</th>
+          <th>Edit</th>
+          <th>Delete</th> 
+          </tr>
+
+         <% for(var i = 0; i < data.length; i++) { %>
+          <tr>     
+         <td> <%= data[i].productName %></td>
+         <td> <%= data[i].quantity %></td>
+         <td> <%= data[i].price %></td>
+         <td> <%= data[i].manufacturedAt%></td>     
+          <td><button 
+              data-id = "<%= data[i].id %>"
+              data-productName = "<%= data[i].productName %>" 
+              data-price = "<%= data[i].price %>" 
+              data-quantity = "<%= data[i].quantity %>" 
+              data-manufacturedAt = "<%= data[i].manufacturedAt %>" 
+                id = "editBtn">
+                Edit </button></td>   
+         <td><button data-id = "<%= data[i].id   %>"
+            name='gotoNode' id = "deleteBtn">Delete</button></td>   
+        </tr>   
+        <% } %>
+            <!-- <div class = "modal" id = "modal">
+            <div class = "modal-content">
+              <span class="close">&times;</span>
+              <h2>
+                  Are you sure to delete to this data?
+              </h2>
+              <a id = "a-tag" href = "delete/">Delete Row</a>
+              <a class = "nobtn" href = "">No</a>
+          </div>  
+          </div> -->
+      </table>
+
+
+      <script src="/script/script.js"></script>
+</body>
+<script>
+    function validateForm(e){
+     const productName = document.forms["form"]["productName"].value;
+     const price = document.forms["form"]["price"].value;
+     const quantity = document.forms["form"]["quantity"].value;
+     const manufacturedAt = document.forms["form"]["manufacturedAt"].value;
+                     
+      if(productName === ""){
+        alert("you must fill product name")
+      }else if( /\d/.test(productName)){
+        alert("Your product name is included with the number")
+      }
+      if(price === ""){
+        alert("you must fill price")
+      }else if(!/^\d+$/.test(price)){
+          alert("Check that, you entered string for the price")
+      }
+      if(quantity === ""){
+        alert("you must fill quantity")
+      }else if(!/^\d+$/.test(quantity)){
+          alert("Check that, you entered string for the quantity")
+      }
+      if(manufacturedAt === ""){
+        alert("you must fill Manufacturing Location")
+      }else if( /\d/.test(productName)){
+        alert("Your Manufacturer location is included with the number")
+      }
+
+    }
+</script>
+</html>
